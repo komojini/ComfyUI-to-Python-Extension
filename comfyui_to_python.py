@@ -451,7 +451,7 @@ class ComfyUItoPython:
 
 
 if __name__ == '__main__':
-    filename = 'faceid_ipadapter_upscale_efficient'
+    filename = 'ipadapter-faceid-upscale_0001'
 
     # Update class parameters here
     input_file = f'api-workflows/{filename}.json'

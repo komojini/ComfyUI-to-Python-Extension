@@ -262,7 +262,7 @@ def main():
             )
 
             saveimage_75 = saveimage.save_images(
-                filename_prefix="ip-adapter/faceid-upscale",
+                filename_prefix="ip-adapter/faceid-upscale-efficient",
                 images=get_value_at_index(imageupscalewithmodel_65, 0),
             )
 
