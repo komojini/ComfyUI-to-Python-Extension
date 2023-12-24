@@ -1,0 +1,281 @@
+{
+    "32": {
+        "inputs": {
+            "provider": "CPU"
+        },
+        "class_type": "InsightFaceLoader"
+    },
+    "34": {
+        "inputs": {
+            "ipadapter_file": "ip-adapter-faceid_sd15.bin"
+        },
+        "class_type": "IPAdapterModelLoader"
+    },
+    "35": {
+        "inputs": {
+            "weight": 0.9,
+            "noise": 0.0,
+            "weight_type": "original",
+            "start_at": 0.0,
+            "end_at": 1.0,
+            "unfold_batch": false,
+            "ipadapter": [
+                "34",
+                0
+            ],
+            "clip_vision": [
+                "32",
+                0
+            ],
+            "image": [
+                "36",
+                0
+            ],
+            "model": [
+                "76",
+                0
+            ]
+        },
+        "class_type": "IPAdapterApply"
+    },
+    "36": {
+        "inputs": {
+            "image": "Image 2023-12-23 at 8.12 PM (1).jpeg",
+            "upload": "image"
+        },
+        "class_type": "LoadImage",
+        "is_changed": [
+            "7ee970479178a5a86388a0abe8e6c716b15f9345a39c9283a769f7b2434a37a0"
+        ]
+    },
+    "37": {
+        "inputs": {
+            "ipadapter_file": "ip-adapter-plus-face_sd15.safetensors"
+        },
+        "class_type": "IPAdapterModelLoader"
+    },
+    "38": {
+        "inputs": {
+            "clip_name": "SD1.5/pytorch_model.bin"
+        },
+        "class_type": "CLIPVisionLoader"
+    },
+    "39": {
+        "inputs": {
+            "interpolation": "LANCZOS",
+            "crop_position": "center",
+            "sharpening": 0.0,
+            "image": [
+                "36",
+                0
+            ]
+        },
+        "class_type": "PrepImageForClipVision"
+    },
+    "40": {
+        "inputs": {
+            "weight": 0.3,
+            "noise": 0.33,
+            "weight_type": "original",
+            "start_at": 0.0,
+            "end_at": 1.0,
+            "unfold_batch": false,
+            "ipadapter": [
+                "37",
+                0
+            ],
+            "clip_vision": [
+                "38",
+                0
+            ],
+            "image": [
+                "39",
+                0
+            ],
+            "model": [
+                "35",
+                0
+            ]
+        },
+        "class_type": "IPAdapterApply"
+    },
+    "54": {
+        "inputs": {
+            "model_name": "GFPGANv1.4.pth"
+        },
+        "class_type": "FaceRestoreModelLoader"
+    },
+    "55": {
+        "inputs": {
+            "facedetection": "retinaface_resnet50",
+            "codeformer_fidelity": 0.5,
+            "facerestore_model": [
+                "54",
+                0
+            ],
+            "image": [
+                "77",
+                5
+            ]
+        },
+        "class_type": "FaceRestoreCFWithModel"
+    },
+    "56": {
+        "inputs": {
+            "images": [
+                "55",
+                0
+            ]
+        },
+        "class_type": "PreviewImage"
+    },
+    "57": {
+        "inputs": {
+            "faces_index": "0",
+            "image": [
+                "77",
+                5
+            ],
+            "reference": [
+                "36",
+                0
+            ],
+            "faceanalysis_model": [
+                "59",
+                0
+            ],
+            "faceswap_model": [
+                "60",
+                0
+            ]
+        },
+        "class_type": "Face Swap (mtb)"
+    },
+    "59": {
+        "inputs": {
+            "faceswap_model": "buffalo_l"
+        },
+        "class_type": "Load Face Analysis Model (mtb)"
+    },
+    "60": {
+        "inputs": {
+            "faceswap_model": "inswapper_128.onnx"
+        },
+        "class_type": "Load Face Swap Model (mtb)"
+    },
+    "61": {
+        "inputs": {
+            "facedetection": "retinaface_resnet50",
+            "codeformer_fidelity": 0.5,
+            "facerestore_model": [
+                "54",
+                0
+            ],
+            "image": [
+                "57",
+                0
+            ]
+        },
+        "class_type": "FaceRestoreCFWithModel"
+    },
+    "63": {
+        "inputs": {
+            "images": [
+                "61",
+                0
+            ]
+        },
+        "class_type": "PreviewImage"
+    },
+    "65": {
+        "inputs": {
+            "upscale_model": [
+                "66",
+                0
+            ],
+            "image": [
+                "61",
+                0
+            ]
+        },
+        "class_type": "ImageUpscaleWithModel"
+    },
+    "66": {
+        "inputs": {
+            "model_name": "4x-UltraSharp.pth"
+        },
+        "class_type": "UpscaleModelLoader"
+    },
+    "75": {
+        "inputs": {
+            "filename_prefix": "ip-adapter/faceid-upscale",
+            "images": [
+                "65",
+                0
+            ]
+        },
+        "class_type": "SaveImage"
+    },
+    "76": {
+        "inputs": {
+            "ckpt_name": "SD1.5/beautifulRealistic_v7.safetensors",
+            "vae_name": "vae-ft-mse-840000-ema-pruned.safetensors",
+            "clip_skip": -1,
+            "lora_name": "SD1.5/ip-adapter-faceid_sd15_lora.safetensors",
+            "lora_model_strength": 1.0,
+            "lora_clip_strength": 1.0,
+            "positive": "photo of a man, fashion model, simple clothes\n\nhigh quality, highly detailed, 4k, highres",
+            "negative": "blurry, distorted, low quality, bad hands",
+            "token_normalization": "none",
+            "weight_interpretation": "comfy",
+            "empty_latent_width": 512,
+            "empty_latent_height": 768,
+            "batch_size": 1
+        },
+        "class_type": "Efficient Loader"
+    },
+    "77": {
+        "inputs": {
+            "seed": 421559983162409,
+            "steps": 30,
+            "cfg": 8.0,
+            "sampler_name": "euler",
+            "scheduler": "normal",
+            "denoise": 1.0,
+            "preview_method": "auto",
+            "vae_decode": "true",
+            "model": [
+                "40",
+                0
+            ],
+            "positive": [
+                "76",
+                1
+            ],
+            "negative": [
+                "76",
+                2
+            ],
+            "latent_image": [
+                "76",
+                3
+            ],
+            "optional_vae": [
+                "76",
+                4
+            ]
+        },
+        "class_type": "KSampler (Efficient)"
+    },
+    "79": {
+        "inputs": {
+            "save_prompt_api": "true",
+            "output_path": "ComfyUI-to-Python-Extension/comfy-workflows",
+            "filename_prefix": "ComfyUI_Prompt",
+            "filename_delimiter": "_",
+            "filename_number_padding": 4,
+            "parse_text_tokens": false
+        },
+        "class_type": "Export API"
+    }
+}

@@ -451,10 +451,12 @@ class ComfyUItoPython:
 
 
 if __name__ == '__main__':
+    filename = 'faceid_ipadapter_upscale_efficient'
+
     # Update class parameters here
-    input_file = 'workflow_api.json'
-    output_file = 'workflow_api.py'
-    queue_size = 10
+    input_file = f'api-workflows/{filename}.json'
+    output_file = f'output_files/{filename}.py'
+    queue_size = 5
 
     # Convert ComfyUI workflow to Python
     ComfyUItoPython(input_file=input_file, output_file=output_file, queue_size=queue_size)
